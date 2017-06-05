@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+ 	<meta charset="utf-8">
+	<title>用户登录</title>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<style type="text/css">
+		.jumbotron{background-color: #f9f9f9;}
+	</style>
+	<script src="../../static/js/jquery-3.2.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="jumbotron">
+  		<div class="container-fluid">
+    		<h1 class="text-center">N-blog</h1>
+    		<p class="text-center">a blog system demo for learning node.js, express, mongodb, bootstrap, jquery, etc.</p>
+  		</div>
+	</div>
+	<div class="container">
+	    <ul class="nav nav-tabs" role="tablist">
+	      <li role="presentation" class="active"><a href="#register" role="tab" data-toggle="tab">注册</a></li>
+	      <li role="presentation"><a href="#signin" role="tab" data-toggle="tab">登录</a></li>
+	    </ul>
+	    <div class="tab-content">
+	      	<div role="tabpanel1" class="tab-pane fade in active" id="register">
+		        <form id="reg" class="form-signin" role="form" method="post" action="/reg">
+		          <div class="form-group has-feedback">
+		            <label class="control-label sr-only" for="inputSuccess1">Hidden label</label>
+		            <input id="inputSuccess1" type="text" name="name" class="form-control" placeholder="用户名" required autofocus>
+		          </div>
+		          <div class="form-group has-feedback">
+		            <label class="control-label sr-only" for="inputSuccess2">Hidden label</label>
+		            <input id="inputSuccess2" type="email" name="email" class="form-control" placeholder="邮箱" required>
+		          </div>
+		          <div class="form-group has-feedback">
+		            <label class="control-label sr-only" for="regpassword">Hidden label</label>
+		            <input id="regpassword" name="password" type="password" class="form-control" placeholder="密码" required>  
+		          </div>
+		          <div class="form-group has-feedback">
+		            <label class="control-label sr-only" for="regpasswordagain">Hidden label</label>
+		            <input id="regpasswordagain" name="password-repeat" type="password" class="form-control" placeholder="确认密码" required>  
+		          </div>
+		          <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
+		        </form>
+	      	</div>
+		    <div role="tabpane1" class="tab-pane fade" id="signin">
+			    <form id="login" class="form-signin" role="form" method="post" action="/login">
+			        <div class="form-group has-feedback">
+				        <label class="control-label sr-only" for="inputSuccess3">Hidden label</label>
+				        <input id="inputSuccess3" type="text" name="name" class="form-control" placeholder="用户名" required autofocus>
+			        </div>
+			        <div class="form-group has-feedback">
+				        <label class="control-label sr-only" for="loginpassword">Hidden label</label>
+				        <input id="loginpassword" name="password" type="password" class="form-control" placeholder="密码" required>
+			        </div>
+			        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+			    </form>
+		    </div>
+		</div>        
+  </div><!-- container -->
+</body>
+</html>

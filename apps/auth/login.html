@@ -3,10 +3,13 @@
 <head>
  	<meta charset="utf-8">
 	<title>用户登录</title>
-	<link rel="stylesheet" type="text/css" href="../../static/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="../../static/css/style.min.css">
-	<script src="../../static/js/jquery-3.2.1.min.js"></script>
-	<script src="../../static/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../static/vender/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../../static/vender/dist/css/bootstrapValidator.css">
+	<link rel="stylesheet" type="text/css" href="../../static/css/auth/style.min.css">
+
+	<script src="../../static/vender/jquery/jquery-3.2.1.min.js"></script>
+	<script src="../../static/vender/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../static/vender/dist/js/bootstrapValidator.js"></script>
 
 	<style type="text/css">
 		.jumbotron{background-color: #f9f9f9;}
@@ -27,36 +30,36 @@
 	    <div class="tab-content">
 	      	<div role="tabpanel1" class="tab-pane fade in active" id="register">
 		        <form id="reg" class="form-signin" role="form" method="post" action="http://localhost:8080/authentication/user/">
-		          <div class="form-group has-feedback">
-		            <label class="control-label sr-only" for="inputSuccess1">Hidden label</label>
-		            <input id="inputSuccess1" type="text" name="name" class="form-control" placeholder="用户名" required autofocus>
-		          </div>
-		          <div class="form-group has-feedback">
-		            <label class="control-label sr-only" for="inputSuccess2">Hidden label</label>
-		            <input id="inputSuccess2" type="email" name="email" class="form-control" placeholder="邮箱" required>
-		          </div>
-		          <div class="form-group has-feedback">
-		            <label class="control-label sr-only" for="regpassword">Hidden label</label>
-		            <input id="regpassword" name="password" type="password" class="form-control" placeholder="密码" required>  
-		          </div>
-		          <div class="form-group has-feedback">
-		            <label class="control-label sr-only" for="regpasswordagain">Hidden label</label>
-		            <input id="regpasswordagain" name="confirm_password" type="password" class="form-control" placeholder="确认密码" required>  
-		          </div>
-		          <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
+			        <div class="form-group has-feedback">
+			            <label class="control-label sr-only" for="username">用户名</label>
+			            <input id="username" type="text" name="username" class="form-control" placeholder="用户名" required autofocus>
+			        </div>
+			        <div class="form-group has-feedback">
+			            <label class="control-label sr-only" for="email">邮箱</label>
+			            <input id="email" type="email" name="email" class="form-control" placeholder="邮箱" required>
+			        </div>
+			        <div class="form-group has-feedback">
+			            <label class="control-label sr-only" for="regpassword">密码</label>
+			            <input id="password" name="password" type="password" class="form-control" placeholder="密码" required>  
+			        </div>
+			        <div class="form-group has-feedback">
+			            <label class="control-label sr-only" for="regpasswordagain">确认密码</label>
+			            <input id="confirmpassword" name="confirmpassword" type="password" class="form-control" placeholder="确认密码" required>  
+			        </div>
+			        <button id="btnreg" class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
 		        </form>
 	      	</div>
-		    <div role="tabpane1" class="tab-pane fade" id="signin">
+		    <div role="tabpane2" class="tab-pane fade" id="signin">
 			    <form id="login" class="form-signin" role="form" method="post" action="/login">
 			        <div class="form-group has-feedback">
-				        <label class="control-label sr-only" for="inputSuccess3">Hidden label</label>
+				        <label class="control-label sr-only" for="inputSuccess3">用户名</label>
 				        <input id="inputSuccess3" type="text" name="name" class="form-control" placeholder="用户名" required autofocus>
 			        </div>
 			        <div class="form-group has-feedback">
 				        <label class="control-label sr-only" for="loginpassword">Hidden label</label>
 				        <input id="loginpassword" name="password" type="password" class="form-control" placeholder="密码" required>
 			        </div>
-			        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+			        <button id="btnlogin" class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
 			    </form>
 		    </div>
 		</div>        
@@ -67,8 +70,89 @@
 		<p>Designed By XueJun & 2017</p>
 	</div>
 
-	<script type="text/javascript" src="../../static/js/particle.js"></script>
-	<script type="text/javascript" src="../../static/js/background.js"></script>
-	<script type="text/javascript" src="../../static/js/layer/layer.js"></script>
+	<script type="text/javascript">
+		
+	$(document).ready(function() {
+	    $('#reg').bootstrapValidator({
+	        message: 'This value is not valid',
+	        feedbackIcons: {
+	            valid: 'glyphicon glyphicon-ok',
+	            invalid: 'glyphicon glyphicon-remove',
+	            validating: 'glyphicon glyphicon-refresh'
+	        },
+	        fields: {
+	            username: {
+	                message: 'The username is not valid',
+		                validators: {
+		                     notEmpty: {
+	                        message: 'The username is required and can\'t be empty'
+	                    },
+	                    stringLength: {
+	                        min: 6,
+	                        max: 30,
+	                        message: 'The username must be more than 6 and less than 30 characters long'
+	                    },
+	                    regexp: {
+	                        regexp: /^[a-zA-Z0-9_\.]+$/,
+	                        message: 'The username can only consist of alphabetical, number, dot and underscore'
+	                    },
+	                    remote: {
+	                    	url: "...",
+	                    	type: "post",
+	                    	dataType: "json",
+	                    	data: {
+	                    		username: function() {
+	                    			alert("===");
+	                    			return $("#username").val();
+	                    		}
+	                    	}
+	                    },
+	                    different: {
+	                        field: 'password',
+	                        message: 'The username and password cannot be the same as each other'
+	                    }
+	                }
+	            },
+	            email: {
+	                validators: {
+	                    emailAddress: {
+	                        message: 'The input is not a valid email address'
+	                    }
+	                }
+	            },
+	            password: {
+	                validators: {
+	                    notEmpty: {
+	                        message: 'The password is required and cannot be empty'
+	                    },
+	                    identical: {
+	                        field: 'confirmPassword',
+	                        message: 'The password and its confirm are not the same'
+	                    },
+	                    different: {
+	                        field: 'username',
+	                        message: 'The password cannot be the same as username'
+	                    }
+	                }
+	            },
+	            confirmpassword: {
+	                validators: {
+	                    notEmpty: {
+	                        message: 'The confirm password is required and cannot be empty'
+	                    },
+	                    identical: {
+	                        field: 'password',
+	                        message: 'The password and its confirm are not the same'
+	                    },
+	                    different: {
+	                        field: 'username',
+	                        message: 'The password cannot be the same as username'
+	                    }
+	                }
+	            }
+	        }
+	    });
+	});
+	</script>
 </body>
 </html>
